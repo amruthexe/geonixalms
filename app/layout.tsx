@@ -10,8 +10,38 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Geonixa LMS",
-  description: "Learning Management System",
+  title: {
+    default: "Geonixa LMS",
+    template: "%s | Geonixa LMS",
+  },
+  description: "A comprehensive Learning Management System for students and administrators.",
+  keywords: ["LMS", "Learning Management System", "Education", "Online Courses", "Geonixa", "Student Portal", "Admin Dashboard"],
+  metadataBase: new URL("https://lms.geonixa.com"),
+  openGraph: {
+    title: "Geonixa LMS",
+    description: "Empowering education through technology. Join our learning platform today.",
+    url: "/",
+    siteName: "Geonixa LMS",
+    images: [
+      {
+        url: "https://www.geonixa.com/_next/image?url=%2Fgeonixa.png&w=1200&q=75",
+        width: 1200,
+        height: 630,
+        alt: "Geonixa LMS",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Geonixa LMS",
+    description: "A comprehensive Learning Management System for students and administrators.",
+    images: ["https://www.geonixa.com/_next/image?url=%2Fgeonixa.png&w=1200&q=75"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
