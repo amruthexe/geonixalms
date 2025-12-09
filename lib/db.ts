@@ -40,6 +40,7 @@ async function dbConnect() {
       tlsAllowInvalidCertificates: true, // Fix for SSL handshake errors
     };
 
+    // Store the promise in the global cache to prevent concurrent connections
     cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
       return mongoose;
     });
