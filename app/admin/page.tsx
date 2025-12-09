@@ -2,6 +2,7 @@
 import { BookOpen, Users, Video } from "lucide-react";
 import dbConnect from "@/lib/db";
 import { Course, User } from "@/lib/models";
+import AdminCharts from "@/components/AdminCharts";
 
 // Simple Card Component since we don't have shadcn/ui yet
 function DashboardCard({ title, value, icon: Icon, color }: any) {
@@ -22,9 +23,48 @@ export default async function AdminDashboard() {
   await dbConnect();
   
   const studentCount = await User.countDocuments({ role: 'student' });
-  console.log("Dashboard student count:", studentCount);
   const courseCount = await Course.countDocuments();
-  // const totalEnrollments = await Enrollment.countDocuments(); // Optional
+
+  // 1. Student Growth (Group by Month)
+  const rawStudentData = await User.aggregate([
+    { $match: { role: 'student' } },
+    {
+      $group: {
+        _id: { $month: "$createdAt" },
+        count: { $sum: 1 }
+      }
+    },
+    { $sort: { "_id": 1 } }
+  ]);
+
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+  // Initialize all months with 0
+  const enrollmentData = monthNames.map((name, index) => {
+    const found = rawStudentData.find(d => d._id === index + 1);
+    return {
+      name,
+      students: found ? found.count : 0
+    };
+  });
+
+  // 2. Course Distribution (Group by Category)
+  const rawCourseData = await Course.aggregate([
+    {
+      $group: {
+        _id: "$category",
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+
+  const colors = ['#f97316', '#3b82f6', '#a855f7', '#ec4899', '#22c55e', '#eab308'];
+  
+  const courseData = rawCourseData.map((d, index) => ({
+    name: d._id || "Uncategorized",
+    value: d.count,
+    color: colors[index % colors.length]
+  }));
 
   return (
     <div className="space-y-8">
@@ -53,6 +93,8 @@ export default async function AdminDashboard() {
           color="bg-purple-500" 
         />
       </div>
+
+      <AdminCharts enrollmentData={enrollmentData} courseData={courseData} />
 
       {/* Recent Activity or Quick Actions could go here */}
     </div>

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, LayoutDashboard } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Logo from "@/components/Logo";
 
 export default async function StudentLayout({
   children,
@@ -24,12 +25,21 @@ export default async function StudentLayout({
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
-             {/* Logo placeholder */}
-             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">G</div>
+             <Logo className="h-8 w-8" />
              <span className="text-xl font-bold text-gray-900">Geonixa LMS</span>
           </Link>
 
           <div className="flex items-center gap-4">
+            {session.user.role === "admin" && (
+              <Link 
+                href="/admin"
+                className="hidden md:flex items-center gap-2 px-3 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+              >
+                <LayoutDashboard size={16} />
+                Admin
+              </Link>
+            )}
+            
             <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
               <div className="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
                 <User size={16} />

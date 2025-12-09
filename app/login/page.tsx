@@ -3,8 +3,10 @@
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import TechLoader from "@/components/TechLoader";
+import Logo from "@/components/Logo";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -41,7 +43,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full bg-white p-8 rounded-xl border border-gray-200 shadow-sm space-y-6">
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center">
+          <Logo className="h-16 w-16 mb-4" />
           <h1 className="text-3xl font-bold text-primary">Geonixa LMS</h1>
           <p className="text-gray-500 mt-2">Sign in to your account</p>
         </div>
@@ -82,10 +85,12 @@ export default function LoginPage() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors font-medium flex items-center justify-center"
+            className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {loading ? <Loader2 className="animate-spin" size={20} /> : "Sign In"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
+          
+          <TechLoader loading={loading} />
         </form>
 
         <div className="text-center text-sm text-gray-500">
