@@ -146,7 +146,7 @@ export default async function CoursePlayerPage({
             return (
               <Link 
                 key={lesson._id}
-                href={`/course/${courseId}?lessonId=${lesson._id}`}
+                href={`/learn/${courseId}?lessonId=${lesson._id}`}
                 className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
                   isActive 
                     ? 'bg-orange-100 text-primary border border-orange-200' 

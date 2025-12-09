@@ -24,11 +24,27 @@ export default async function StudentDashboard() {
       {/* Welcome Section */}
       <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full blur-3xl -mr-16 -mt-16 opacity-50"></div>
-        <div className="relative z-10">
-          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-            Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">{session.user.name}</span> <span className="animate-wave inline-block origin-bottom-right">👋</span>
-          </h1>
-          <p className="text-gray-500 mt-3 text-lg">Ready to continue your learning journey today?</p>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+              Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">{session.user.name}</span> <span className="animate-wave inline-block origin-bottom-right">👋</span>
+            </h1>
+            <p className="text-gray-500 mt-3 text-lg">Ready to continue your learning journey today?</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link 
+              href="/" 
+              className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-all shadow-sm hover:shadow-md"
+            >
+              Home
+            </Link>
+            <Link 
+              href="/courses" 
+              className="px-6 py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-lg hover:shadow-gray-200"
+            >
+              Browse Courses
+            </Link>
+          </div>
         </div>
       </div>
 
