@@ -78,6 +78,7 @@ export default async function CoursePlayerPage({
                       src={embedUrl} 
                       className="w-full h-full absolute inset-0" 
                       allowFullScreen
+                      sandbox="allow-scripts allow-same-origin allow-presentation"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     />
                   ) : (
