@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogOut, User, LayoutDashboard } from "lucide-react";
+import { LogOut, User, LayoutDashboard, Settings } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
@@ -46,6 +46,14 @@ export default async function StudentLayout({
               </div>
               <span className="hidden md:block">{session.user.name}</span>
             </div>
+
+            <Link 
+              href="/settings"
+              className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Settings"
+            >
+              <Settings size={20} />
+            </Link>
             
             {/* Logout Button */}
             <LogoutButton />
