@@ -22,7 +22,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             name="title" 
             id="title" 
             required 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
             placeholder="e.g. React Components"
           />
         </div>
@@ -33,7 +33,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             name="description" 
             id="description" 
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
             placeholder="Brief overview of this lesson..."
           />
         </div>
@@ -45,7 +45,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             name="videoUrl" 
             id="videoUrl" 
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
             placeholder="Google Drive link or other video URL"
           />
         </div>
@@ -56,7 +56,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             name="notes" 
             id="notes" 
             rows={5}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
             placeholder="Additional notes for students..."
           />
         </div>
@@ -67,7 +67,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             type="url" 
             name="resourceUrl" 
             id="resourceUrl" 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
             placeholder="Notion link or external resource"
           />
         </div>
@@ -79,7 +79,7 @@ export default async function CreateLessonPage({ params }: { params: Promise<{ c
             name="order" 
             id="order" 
             defaultValue={0}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
           />
         </div>
 

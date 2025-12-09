@@ -3,6 +3,7 @@ import { Plus, Edit, Trash } from "lucide-react";
 import dbConnect from "@/lib/db";
 import { Course } from "@/lib/models";
 import { deleteCourse } from "@/app/actions/course";
+import DeleteButton from "@/components/DeleteButton";
 
 export default async function CoursesPage() {
   await dbConnect();
@@ -14,7 +15,7 @@ export default async function CoursesPage() {
         <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
         <Link 
           href="/admin/courses/create" 
-          className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-orange-600 transition-colors"
+          className="bg-primary text-black px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-orange-600 transition-colors"
         >
           <Plus size={20} />
           Create Course
@@ -53,11 +54,7 @@ export default async function CoursesPage() {
                     <Link href={`/admin/courses/${course._id}`} className="text-blue-600 hover:text-blue-900">
                       <Edit size={18} />
                     </Link>
-                    <form action={deleteCourse.bind(null, course._id.toString())}>
-                        <button type="submit" className="text-red-600 hover:text-red-900">
-                            <Trash size={18} />
-                        </button>
-                    </form>
+                    <DeleteButton action={deleteCourse.bind(null, course._id.toString())} />
                   </div>
                 </td>
               </tr>
