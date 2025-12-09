@@ -34,7 +34,7 @@ export default function SettingsPage() {
         setConfirmPassword("");
         setLoading(false);
       },
-      onError: (ctx) => {
+      onError: (ctx: any) => {
         setMessage({ type: 'error', text: ctx.error.message });
         setLoading(false);
       }

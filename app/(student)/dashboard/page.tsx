@@ -26,7 +26,7 @@ export default async function StudentDashboard() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full blur-3xl -mr-16 -mt-16 opacity-50"></div>
         <div className="relative z-10">
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-            Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">{session.user.name}</span> <span className="animate-wave inline-block origin-[70%_70%]">👋</span>
+            Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">{session.user.name}</span> <span className="animate-wave inline-block origin-bottom-right">👋</span>
           </h1>
           <p className="text-gray-500 mt-3 text-lg">Ready to continue your learning journey today?</p>
         </div>
