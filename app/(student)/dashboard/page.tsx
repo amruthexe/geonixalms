@@ -90,7 +90,7 @@ export default async function StudentDashboard() {
               return (
                 <Link 
                   key={course._id} 
-                  href={`/course/${course._id}`}
+                  href={`/learn/${course._id}`}
                   className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
                 >
                   <div className="aspect-video bg-gray-100 relative overflow-hidden">

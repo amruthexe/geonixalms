@@ -20,6 +20,8 @@ const CourseSchema = new Schema({
     description: { type: String },
     thumbnailUrl: { type: String },
     category: { type: String },
+    price: { type: Number, default: 0 }, // Price in smallest currency unit (e.g., paise for INR) or just standard unit. Razorpay expects paise. Let's store as standard number and convert, or store as is. User said "Price". Let's assume standard currency for display, but we might need to be careful. Let's stick to standard number (e.g. 499).
+    duration: { type: String }, // e.g., "15 Days"
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 }, { timestamps: true });
@@ -52,3 +54,16 @@ const EnrollmentSchema = new Schema({
 EnrollmentSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 
 export const Enrollment = models.Enrollment || model('Enrollment', EnrollmentSchema);
+
+// --- Purchase Model ---
+const PurchaseSchema = new Schema({
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    courseId: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
+    amount: { type: Number, required: true },
+    orderId: { type: String, required: true },
+    paymentId: { type: String },
+    status: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
+    createdAt: { type: Date, default: Date.now },
+}, { timestamps: true });
+
+export const Purchase = models.Purchase || model('Purchase', PurchaseSchema);

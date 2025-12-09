@@ -19,9 +19,9 @@ export default function Navbar() {
         
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="#features" className="text-gray-600 hover:text-primary font-medium transition-colors">Features</Link>
-          <Link href="#about" className="text-gray-600 hover:text-primary font-medium transition-colors">About</Link>
-          <Link href="#pricing" className="text-gray-600 hover:text-primary font-medium transition-colors">Pricing</Link>
+          <Link href="/features" className="text-gray-600 hover:text-primary font-medium transition-colors">Features</Link>
+          <Link href="/about" className="text-gray-600 hover:text-primary font-medium transition-colors">About</Link>
+          <Link href="/pricing" className="text-gray-600 hover:text-primary font-medium transition-colors">Pricing</Link>
         </nav>
 
         {/* Desktop Actions */}
@@ -54,21 +54,21 @@ export default function Navbar() {
         <div className="md:hidden border-t border-gray-100 bg-white absolute w-full left-0 shadow-lg animate-in slide-in-from-top-5">
           <div className="flex flex-col p-4 space-y-4">
             <Link 
-              href="#features" 
+              href="/features" 
               className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
               onClick={() => setIsOpen(false)}
             >
               Features
             </Link>
             <Link 
-              href="#about" 
+              href="/about" 
               className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
               onClick={() => setIsOpen(false)}
             >
               About
             </Link>
             <Link 
-              href="#pricing" 
+              href="/pricing" 
               className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
               onClick={() => setIsOpen(false)}
             >

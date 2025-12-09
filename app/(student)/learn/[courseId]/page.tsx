@@ -30,18 +30,9 @@ export default async function CoursePlayerPage({
     courseId: courseId 
   });
 
-  if (!enrollment && session.user.role !== 'admin') {
-    // If not enrolled and not admin, redirect or show access denied
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-        <Lock size={64} className="text-gray-300 mb-4" />
-        <h1 className="text-2xl font-bold text-gray-900">Access Denied</h1>
-        <p className="text-gray-500 mt-2">You are not enrolled in this course.</p>
-        <Link href="/dashboard" className="mt-6 text-primary hover:underline">
-          Return to Dashboard
-        </Link>
-      </div>
-    );
+  // Allow access if user is admin or enrolled
+  if (session.user.role !== 'admin' && !enrollment) {
+    redirect(`/course/${courseId}`);
   }
 
   // 2. Fetch Course and Lessons

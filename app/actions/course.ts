@@ -12,6 +12,7 @@ export async function createCourse(formData: FormData) {
     const description = formData.get("description") as string;
     const thumbnailUrl = formData.get("thumbnailUrl") as string;
     const category = formData.get("category") as string;
+    const price = Number(formData.get("price")) || 0;
 
     if (!title) {
         throw new Error("Title is required");
@@ -22,6 +23,7 @@ export async function createCourse(formData: FormData) {
         description,
         thumbnailUrl,
         category,
+        price,
     });
 
     revalidatePath("/admin/courses");
@@ -35,12 +37,14 @@ export async function updateCourse(courseId: string, formData: FormData) {
     const description = formData.get("description") as string;
     const thumbnailUrl = formData.get("thumbnailUrl") as string;
     const category = formData.get("category") as string;
+    const price = Number(formData.get("price")) || 0;
 
     await Course.findByIdAndUpdate(courseId, {
         title,
         description,
         thumbnailUrl,
         category,
+        price,
     });
 
     revalidatePath("/admin/courses");

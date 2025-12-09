@@ -62,6 +62,17 @@ export default async function EditCoursePage({ params }: { params: Promise<{ cou
               </div>
 
               <div className="space-y-2">
+                <label htmlFor="price" className="block text-sm font-bold text-black">Price (INR)</label>
+                <input 
+                  type="number" 
+                  name="price" 
+                  defaultValue={course.price}
+                  min="0"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black"
+                />
+              </div>
+
+              <div className="space-y-2">
                 <label htmlFor="thumbnailUrl" className="block text-sm font-bold text-black">Thumbnail URL</label>
                 <input 
                   type="url" 
