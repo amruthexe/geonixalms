@@ -2,47 +2,50 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI || process.env.MONGODB_URL!;
-const options = {
-    tls: true,
-    serverSelectionTimeoutMS: 5000,
-    tlsAllowInvalidCertificates: true,
-};
-
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-declare global {
-    var _mongoClientPromise: Promise<MongoClient> | undefined;
-    var _mongoClient: MongoClient | undefined;
-}
+const uri = process.env.MONGODB_URI || process.env.MONGODB_URL;
 
 if (!uri) {
-    throw new Error("Please add your Mongo URI to .env.local");
+  throw new Error("Please add your Mongo URI to env (MONGODB_URI or MONGODB_URL)");
 }
 
-if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    global._mongoClient = client;
-    global._mongoClientPromise = client.connect();
-} else {
-    client = global._mongoClient!;
-    clientPromise = global._mongoClientPromise;
+const options = {
+  tls: true,
+  serverSelectionTimeoutMS: 30000, // 30s instead of 5s
+  // DigitalOcean has valid certs, so this is usually not needed:
+  // tlsAllowInvalidCertificates: true,
+};
+
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClient: MongoClient | undefined;
 }
+
+// Reuse a single MongoClient in serverless (Vercel)
+const client =
+  global._mongoClient ?? new MongoClient(uri, options);
+
+if (!global._mongoClient) {
+  global._mongoClient = client;
+}
+
+// Your data is in the "test" database (per earlier steps)
+const db = client.db("test");
 
 export const auth = betterAuth({
-    database: mongodbAdapter(client.db()),
-    emailAndPassword: {
-        enabled: true,
+  database: mongodbAdapter(db, {
+    client, // optional but recommended
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "student",
+      },
     },
-    user: {
-        additionalFields: {
-            role: {
-                type: "string",
-                defaultValue: "student",
-            },
-        },
-    },
-    baseURL: process.env.BETTER_AUTH_URL,
-    secret: process.env.BETTER_AUTH_SECRET,
+  },
+  baseURL: process.env.BETTER_AUTH_URL,
+  secret: process.env.BETTER_AUTH_SECRET,
 });
