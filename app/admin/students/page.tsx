@@ -15,16 +15,32 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
     role: 'student', 
     $or: [
       { name: { $regex: q, $options: 'i' } },
-      { email: { $regex: q, $options: 'i' } }
+      { email: { $regex: q, $options: 'i' } },
+      { phone: { $regex: q, $options: 'i' } }
     ]
   } : { role: 'student' };
 
   console.log("Querying students with:", query);
   
   const [students, totalStudents] = await Promise.all([
-    User.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+    User.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     User.countDocuments(query)
   ]);
+
+  // Fetch enrollments for these students
+  const studentIds = students.map((s: any) => s._id);
+  const enrollments = await Enrollment.find({ userId: { $in: studentIds } }).populate('courseId').lean();
+  
+  const enrollmentMap = new Map<string, string[]>();
+  enrollments.forEach((e: any) => {
+    const sId = e.userId.toString();
+    if (!enrollmentMap.has(sId)) {
+        enrollmentMap.set(sId, []);
+    }
+    if (e.courseId) {
+        enrollmentMap.get(sId)?.push(e.courseId.title);
+    }
+  });
 
   const totalPages = Math.ceil(totalStudents / limit);
 
@@ -45,7 +61,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
             name="q" 
             defaultValue={q}
             placeholder="Search by name or email..." 
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-gray-900 placeholder:text-gray-500"
           />
         </div>
         <button type="submit" className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
@@ -59,6 +75,8 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrolled Courses</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
@@ -76,6 +94,25 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {student.email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {student.phone || "-"}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
+                  {(() => {
+                    const courses = enrollmentMap.get(student._id.toString()) || [];
+                    return courses.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {courses.map((title: string, i: number) => (
+                          <span key={i} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                            {title}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-gray-400 text-xs italic">None</span>
+                    );
+                  })()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(student.createdAt).toLocaleDateString('en-GB', {

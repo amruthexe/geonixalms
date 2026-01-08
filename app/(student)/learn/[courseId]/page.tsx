@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
-import { PlayCircle, FileText, ExternalLink, CheckCircle, Lock } from "lucide-react";
+import { PlayCircle, FileText, ExternalLink } from "lucide-react";
 
 export default async function CoursePlayerPage({ 
   params, 
@@ -24,8 +24,9 @@ export default async function CoursePlayerPage({
 
   await dbConnect();
 
-  // 1. Verify Enrollment
-  const enrollment = await Enrollment.findOne({ 
+  // Check if user is enrolled
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const enrollment: any = await Enrollment.findOne({ 
     userId: session.user.id, 
     courseId: courseId 
   });
@@ -45,6 +46,7 @@ export default async function CoursePlayerPage({
   let currentLesson = null;
   if (lessons.length > 0) {
     if (lessonId) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentLesson = lessons.find((l: any) => l._id.toString() === lessonId);
     }
     if (!currentLesson) {
@@ -142,7 +144,8 @@ export default async function CoursePlayerPage({
         </div>
         
         <div className="flex-1 lg:overflow-y-auto p-4 space-y-2 max-h-[500px] lg:max-h-none">
-          {lessons.map((lesson: any, index: number) => {
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {lessons.map((lesson: any, index: number) => {
             const isActive = currentLesson && lesson._id.toString() === currentLesson._id.toString();
             return (
               <Link 

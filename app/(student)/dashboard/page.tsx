@@ -93,7 +93,7 @@ export default async function StudentDashboard() {
                   <BookOpen size={40} className="text-orange-400" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">No courses yet</h3>
-                <p className="text-gray-500 mt-2 max-w-md mx-auto">You haven't enrolled in any courses yet. Explore our catalog to find your next skill.</p>
+                <p className="text-gray-500 mt-2 max-w-md mx-auto">You have&apos;t enrolled in any courses yet. Explore our catalog to find your next skill.</p>
                 <Link href="/" className="mt-8 px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-orange-600 transition-all hover:shadow-lg hover:shadow-orange-200">
                   Browse Courses
                 </Link>
@@ -101,6 +101,7 @@ export default async function StudentDashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {enrollments.map((enrollment: any) => {
               const course = enrollment.courseId;
               return (
@@ -111,11 +112,14 @@ export default async function StudentDashboard() {
                 >
                   <div className="aspect-video bg-gray-100 relative overflow-hidden">
                     {course.thumbnailUrl ? (
+                      <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={course.thumbnailUrl} 
                         alt={course.title} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
+                      </>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-50">
                         <PlayCircle size={48} />

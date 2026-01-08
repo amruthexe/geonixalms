@@ -12,6 +12,7 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -21,11 +22,18 @@ export default function SignupPage() {
     setLoading(true);
     setError("");
 
+    if (phone.length < 10) {
+      setError("Phone number must be at least 10 digits");
+      setLoading(false);
+      return;
+    }
+
     await authClient.signUp.email({
       email,
       password,
       name,
-    }, {
+      phone,
+    } as any, {
       onSuccess: () => {
         router.push("/dashboard");
       },
@@ -75,6 +83,19 @@ export default function SignupPage() {
               required 
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
               placeholder="you@example.com"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="phone" className="block text-sm font-bold text-black">Phone Number</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required 
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-black placeholder:text-gray-500"
+              placeholder="1234567890"
             />
           </div>
 

@@ -34,6 +34,7 @@ export default function SettingsPage() {
         setConfirmPassword("");
         setLoading(false);
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (ctx: any) => {
         setMessage({ type: 'error', text: ctx.error.message });
         setLoading(false);

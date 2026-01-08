@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
+
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";

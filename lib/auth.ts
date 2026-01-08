@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
+import { admin } from "better-auth/plugins";
 
 const uri = process.env.MONGODB_URI || process.env.MONGODB_URL;
 
@@ -16,7 +17,7 @@ const options = {
 };
 
 declare global {
-  // eslint-disable-next-line no-var
+
   var _mongoClient: MongoClient | undefined;
 }
 
@@ -44,8 +45,15 @@ export const auth = betterAuth({
         type: "string",
         defaultValue: "student",
       },
+      phone: {
+        type: "string",
+        required: false,
+      },
     },
   },
+  plugins: [
+    admin()
+  ],
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
 });

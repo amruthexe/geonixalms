@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogOut, User, LayoutDashboard, Settings } from "lucide-react";
+import { User, LayoutDashboard, Settings } from "lucide-react";
 import LogoutButton from "@/components/LogoutButton";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";

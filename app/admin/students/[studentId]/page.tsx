@@ -1,4 +1,5 @@
-import { enrollStudent, unenrollStudent } from "@/app/actions/student";
+import { enrollStudent, unenrollStudent, updateStudentPhone } from "@/app/actions/student";
+import ResetPasswordButton from "@/components/ResetPasswordButton";
 import dbConnect from "@/lib/db";
 import { User, Course, Enrollment } from "@/lib/models";
 import Link from "next/link";
@@ -43,6 +44,38 @@ export default async function StudentDetailsPage({ params }: { params: Promise<{
         </div>
       </div>
 
+      {/* Edit Student Details */}
+      <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+          <h3 className="text-lg font-bold text-gray-900">Edit Details</h3>
+          
+          {/* Phone Update Form */}
+          <form action={updateStudentPhone.bind(null, studentId)} className="flex gap-4 items-end">
+            <div className="flex-1 space-y-1">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <input 
+                type="text" 
+                name="phone"
+                id="phone"
+                defaultValue={student.phone || ""}
+                placeholder="9999999999"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-gray-900 placeholder:text-gray-500"
+              />
+            </div>
+            <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors">
+              Update Phone
+            </button>
+          </form>
+
+          {/* Password Reset Section */}
+          <div className="pt-4 border-t border-gray-100">
+             <h4 className="text-sm font-bold text-gray-900 mb-2">Security</h4>
+             <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">Reset password to default (9999999999)</p>
+                <ResetPasswordButton studentId={studentId} />
+             </div>
+          </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Enrolled Courses List */}
         <div className="space-y-4">
@@ -83,7 +116,7 @@ export default async function StudentDetailsPage({ params }: { params: Promise<{
                   name="courseId" 
                   id="courseId" 
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-gray-900"
                 >
                   <option value="">-- Select a course --</option>
                   {availableCourses.map((course: any) => (

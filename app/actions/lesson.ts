@@ -1,7 +1,7 @@
 'use server';
 
 import dbConnect from "@/lib/db";
-import { Lesson, Course } from "@/lib/models";
+import { Lesson } from "@/lib/models";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
