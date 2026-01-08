@@ -104,6 +104,10 @@ export default async function StudentDashboard() {
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {enrollments.map((enrollment: any) => {
               const course = enrollment.courseId;
+              
+              // Handle case where course might have been deleted but enrollment exists
+              if (!course) return null;
+
               return (
                 <Link 
                   key={course._id} 

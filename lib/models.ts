@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     password: { type: String }, // For email/password auth
     emailVerified: { type: Boolean, default: false },
     image: { type: String },
-    role: { type: String, enum: ['student', 'admin'], default: 'student' },
+    role: { type: String, enum: ['student', 'user', 'admin'], default: 'student' },
     phone: { type: String, default: '9999999999' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },

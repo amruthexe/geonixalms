@@ -12,13 +12,12 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
   await dbConnect();
 
   const query = q ? { 
-    role: 'student', 
     $or: [
       { name: { $regex: q, $options: 'i' } },
       { email: { $regex: q, $options: 'i' } },
       { phone: { $regex: q, $options: 'i' } }
     ]
-  } : { role: 'student' };
+  } : {};
 
   console.log("Querying students with:", query);
   
@@ -49,7 +48,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Students</h1>
+        <h1 className="text-3xl font-bold text-gray-900">All Users & Students</h1>
       </div>
 
       {/* Search Bar */}
@@ -60,7 +59,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
             type="text" 
             name="q" 
             defaultValue={q}
-            placeholder="Search by name or email..." 
+            placeholder="Search by name, email, or phone..." 
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 text-gray-900 placeholder:text-gray-500"
           />
         </div>
@@ -74,6 +73,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrolled Courses</th>
@@ -91,6 +91,15 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
                     </div>
                     <div className="text-sm font-medium text-gray-900">{student.name}</div>
                   </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    student.role === 'admin' 
+                      ? 'bg-purple-100 text-purple-800' 
+                      : 'bg-green-100 text-green-800'
+                  }`}>
+                    {student.role === 'admin' ? 'Admin' : 'Student'}
+                  </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {student.email}
@@ -130,7 +139,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
             ))}
             {students.length === 0 && (
                 <tr>
-                    <td colSpan={4} className="px-6 py-4 text-center text-gray-500">No students found.</td>
+                    <td colSpan={7} className="px-6 py-4 text-center text-gray-500">No users found.</td>
                 </tr>
             )}
           </tbody>

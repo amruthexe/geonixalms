@@ -33,9 +33,12 @@ export default function SignupPage() {
       password,
       name,
       phone,
+      role: 'student', // Force student role
     } as any, {
       onSuccess: () => {
-        router.push("/dashboard");
+        // router.push("/dashboard");
+        // Force full reload to ensure server-side session is fresh
+        window.location.href = "/dashboard";
       },
       onError: (ctx) => {
         setError(ctx.error.message);

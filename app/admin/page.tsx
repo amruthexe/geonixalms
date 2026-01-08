@@ -22,12 +22,12 @@ function DashboardCard({ title, value, icon: Icon, color }: any) {
 export default async function AdminDashboard() {
   await dbConnect();
   
-  const studentCount = await User.countDocuments({ role: 'student' });
+  const studentCount = await User.countDocuments({ role: { $in: ['student', 'user'] } });
   const courseCount = await Course.countDocuments();
 
   // 1. Student Growth (Group by Month)
   const rawStudentData = await User.aggregate([
-    { $match: { role: 'student' } },
+    { $match: { role: { $in: ['student', 'user'] } } },
     {
       $group: {
         _id: { $month: "$createdAt" },

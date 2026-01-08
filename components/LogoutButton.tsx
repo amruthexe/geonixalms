@@ -11,7 +11,8 @@ export default function LogoutButton() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/thank-you");
+          // router.push("/thank-you");
+          window.location.href = "/thank-you";
         },
       },
     });

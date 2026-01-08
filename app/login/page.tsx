@@ -31,7 +31,9 @@ export default function LoginPage() {
         // We can fetch session to check role, or just go to a default page.
         // Let's go to /dashboard, and if admin, they can navigate to /admin.
         // Or better, fetch session first.
-        router.push("/dashboard"); 
+        // router.push("/dashboard"); 
+        // Force full reload to ensure server-side session is fresh and UI updates
+        window.location.href = "/dashboard"; 
       },
       onError: (ctx) => {
         setError(ctx.error.message);
