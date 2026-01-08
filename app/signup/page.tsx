@@ -33,7 +33,6 @@ export default function SignupPage() {
       password,
       name,
       phone,
-      role: 'student', // Force student role
     } as any, {
       onSuccess: () => {
         // router.push("/dashboard");
